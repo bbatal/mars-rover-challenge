@@ -11,4 +11,10 @@ describe("Rover", function() {
         const rover = new Robot(0, 0);
         expect(rover).to.be.an.instanceOf(Robot);
     })
+
+    it('should be at 0,0 if argument is not listed', function() {
+        const rover = new Robot(0,0);
+        expect(rover).to.have.property('x', 0);
+        expect(rover).to.have.property('y', 0);
+    })
 })
