@@ -4,7 +4,7 @@
   "description": "// ****** Mars Rover Challenge ****** Mars Rover technical Challenge",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha --reporter spec"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,11 @@
   "bugs": {
     "url": "https://github.com/bbatal/mars-rover-challenge/issues"
   },
-  "homepage": "https://github.com/bbatal/mars-rover-challenge#readme"
+  "homepage": "https://github.com/bbatal/mars-rover-challenge#readme",
+  "dependencies": {
+    "chai": "^4.3.7",
+    "express": "^4.18.2",
+    "mocha": "^10.2.0",
+    "request": "^2.88.2"
+  }
 }
