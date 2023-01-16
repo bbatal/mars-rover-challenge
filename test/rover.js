@@ -36,4 +36,26 @@ describe("Rover Class", function() {
         const TomRover = new Rover(0,0,'S');
         expect(TomRover).to.have.property('direction', 'S');
     })
+
+    // it(`Should have direction of W when inputting 'L' to findDirection function`, () => {
+    //     const TomRover = new Rover(0, 0, 'N');
+    //     TomRover.findDirection('L');
+    //     expect(TomRover).to.have.property('direction', 'W');
+    // })
+
+    it('Should have output of 1 3 N with input of 1 2 N and LMLMLMLMM', () => {
+        const TomRover = new Rover(1, 2, 'N');
+        TomRover.moveRover('LMLMLMLMM');
+        expect(TomRover).to.have.property('x', 1);
+        expect(TomRover).to.have.property('y', 3);
+        expect(TomRover).to.have.property('direction', 'N');
+    })
+
+    it('Should have output of 5 1 E with input of 3 3 E and MMRMMRMRRM', () => {
+        const TomRover = new Rover(3, 3, 'E');
+        TomRover.moveRover('MMRMMRMRRM');
+        expect(TomRover).to.have.property('x', 5);
+        expect(TomRover).to.have.property('y', 1);
+        expect(TomRover).to.have.property('direction', 'E');
+    })
 })
