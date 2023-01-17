@@ -90,6 +90,12 @@ class marsRover {
         // gets the last rover pushed in and feeds it instructions
         this.list[this.list.length - 1].moveRover(instructions);
     }
+
+    getFinalPosition() {
+        this.list.forEach((individualRover) => {
+            individualRover.logCurrentLocation();
+        })
+    }
 }
 
 
@@ -100,7 +106,9 @@ roverSquad.addRover(3,3, 'E');
 roverSquad.moveRover('MMRMMRMRRM');
 roverSquad.addRover(1,1,'W');
 roverSquad.moveRover('MLMMMLMMRM');
-console.log(roverSquad);
+
+roverSquad.addRover();
+roverSquad.getFinalPosition();
 
 
 module.exports = {Robot, Rover, marsRover};
