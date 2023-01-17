@@ -1,9 +1,7 @@
 class Robot {
 
-    x = 0;
-    y = 0;
 
-    constructor(x, y) {
+    constructor(x = 0, y = 0) {
         this.x = x;
         this.y = y;
     }
@@ -12,10 +10,9 @@ class Robot {
 
 class Rover extends Robot {
 
-    direction = 'N';
     compass = ['N','E','S','W'];
 
-    constructor(x, y, direction) {
+    constructor(x, y, direction = 'N') {
         super(x, y);
 
         this.direction = direction
@@ -65,12 +62,45 @@ class Rover extends Robot {
                 break;
         }
     }
+
+    // need to tell me where the final location is
+    logCurrentLocation() {
+        console.log(`I am currently located at x:${this.x}, y:${this.y} and facing ${this.direction}`);
+    }
     
 }
+// TODO add class that can create many rovers and keep them in a list,
+// Add a battery life to the rovers, and a recharging station
+// add obstacles to the grid
+// make the grid smaller and bigger
+// 
 
-module.exports = Robot;
-module.exports = Rover;
+class marsRover {
 
-const Timmy = new Rover(3, 3, 'E');
-Timmy.moveRover('MMRMMRMRRM')
-console.log(Timmy);
+    constructor() {
+        this.list = [];
+    }
+
+    addRover(xPos, yPos, direction) {
+        const rover = new Rover(xPos, yPos, direction);
+        this.list.push(rover);
+    }
+
+    moveRover(instructions) {
+        // gets the last rover pushed in and feeds it instructions
+        this.list[this.list.length - 1].moveRover(instructions);
+    }
+}
+
+
+// const Timmy = new Rover(3, 3, 'E');
+// Timmy.moveRover('MMRMMRMRRM')
+const roverSquad = new marsRover();
+roverSquad.addRover(3,3, 'E');
+roverSquad.moveRover('MMRMMRMRRM');
+roverSquad.addRover(1,1,'W');
+roverSquad.moveRover('MLMMMLMMRM');
+console.log(roverSquad);
+
+
+module.exports = {Robot, Rover, marsRover};

@@ -1,6 +1,5 @@
 let expect = require("chai").expect;
-let Robot = require("../app");
-let Rover = require("../app");
+let {Robot, Rover, marsRover } = require("../app");
 
 describe("Robot Class", function() {
     it("should be a function", function() {
@@ -57,5 +56,18 @@ describe("Rover Class", function() {
         expect(TomRover).to.have.property('x', 5);
         expect(TomRover).to.have.property('y', 1);
         expect(TomRover).to.have.property('direction', 'E');
+    })
+
+    describe('marsRover class', () => {
+        it('should add 3 rovers if addRover function is called 3 times', () => {
+            const roverTeam = new marsRover();
+            let listArr = roverTeam.list;
+            roverTeam.addRover();
+            roverTeam.addRover();
+            roverTeam.addRover();
+            
+            expect(roverTeam).to.have.property('list');
+            expect(listArr).to.have.length(3);
+        })
     })
 })
