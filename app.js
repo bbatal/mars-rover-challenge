@@ -1,3 +1,8 @@
+const environment = {
+    obstacles: [[0,4], [3, 2], [5, 4]],
+    chargingStation: [[3,5]]
+}
+
 class Robot {
 
     battery;
@@ -85,11 +90,9 @@ class Rover extends Robot {
     }
     
 }
-// TODO add class that can create many rovers and keep them in a list,
-// Add a battery life to the rovers, and a recharging station
-// add obstacles to the grid
-// make the grid smaller and bigger
-// 
+// TODO - add object of obstacles and recharging station
+// TODO - have the rover know how far it is from a recharging station
+// TODO - make function to allow the rover to go to recharging station automatically
 
 class marsRover {
 
@@ -122,7 +125,7 @@ const roverSquad = new marsRover(10, 10);
 roverSquad.addRover(3,3, 'E');
 roverSquad.moveRover('MMRMMRMRRM');
 roverSquad.addRover(1,1,'W');
-roverSquad.moveRover('RMMMRMMM');
+roverSquad.moveRover('RMMMRMMMMM');
 
 roverSquad.addRover(0,0,'N');
 roverSquad.getFinalPosition();
