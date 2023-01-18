@@ -30,7 +30,7 @@ class Rover extends Robot {
         // need to loop over letters and call findDirection function or another one to move
         stringOfLetters.split('').forEach(letter => {
             if (letter === 'M') {
-                if(this.checkBounds()) {
+                if(this.checkBounds() && this.checkObstacles(this.x + 1, this.y + 1)) {
                     this.#move();
                 }
                 this.battery -= 1;
@@ -79,14 +79,29 @@ class Rover extends Robot {
     // checking if rover is out of bounds
     checkBounds() {
         if(this.x > this.grid.width || this.x < 0 || this.y > this.grid.height || this.y < 0) {
-            console.log('Im sorry but the rover has crashed');
+            this.crashed('Out of Bounds')
             return false;
         } return true;
+    }
+
+    checkObstacles(x, y) {
+        environment.obstacles.forEach(obstacle => {
+            const [xPos, yPos] = obstacle;
+            if (xPos === x && yPos === y) {
+                this.crashed('obstacle');
+                return false;
+            }
+        }) 
+        return true;
     }
 
     // need to tell me where the final location is
     logCurrentLocation() {
         console.log(`I am currently located at x:${this.x}, y:${this.y} and facing ${this.direction} and my battery charge is ${this.battery}`);
+    }
+
+    crashed(reason) {
+        console.log(`the rover has stopped due to ${reason} in it's way`);
     }
     
 }
@@ -128,6 +143,7 @@ roverSquad.addRover(1,1,'W');
 roverSquad.moveRover('RMMMRMMMMM');
 
 roverSquad.addRover(0,0,'N');
+roverSquad.moveRover('MMMM');
 roverSquad.getFinalPosition();
 
 

@@ -36,6 +36,14 @@ describe("Rover Class", function() {
         expect(TomRover).to.have.property('direction', 'S');
     })
 
+    it('Should call crashed function with obstacle error when directed into an obstacle', () => {
+        // Rover position should be 0 0 N
+        const TomRover = new Rover();
+        // Rover should crash into obstacle at 0 4
+        TomRover.moveRover('MMMM');
+        expect(TomRover.crashed.calledOnce).to.be.true
+    })
+
     // it(`Should have direction of W when inputting 'L' to findDirection function`, () => {
     //     const TomRover = new Rover(0, 0, 'N');
     //     TomRover.findDirection('L');
@@ -70,4 +78,5 @@ describe("Rover Class", function() {
             expect(listArr).to.have.length(3);
         })
     })
+
 })
