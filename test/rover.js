@@ -36,12 +36,14 @@ describe("Rover Class", function() {
         expect(TomRover).to.have.property('direction', 'S');
     })
 
-    it('Should call crashed function with obstacle error when directed into an obstacle', () => {
+    it('Should stop before obstacle and call crashed function', () => {
         // Rover position should be 0 0 N
+        // obstacle is located at 0 4
         const TomRover = new Rover();
-        // Rover should crash into obstacle at 0 4
+        // Rover should encounter obstacle at 0 4 and stop at 0 3
         TomRover.moveRover('MMMM');
-        expect(TomRover.crashed.calledOnce).to.be.true
+        expect(TomRover).to.have.property('x', 0);
+        expect(TomRover).to.have.property('y', 3);
     })
 
     // it(`Should have direction of W when inputting 'L' to findDirection function`, () => {

@@ -18,19 +18,21 @@ class Robot {
 class Rover extends Robot {
 
     compass = ['N','E','S','W'];
+    halt;
 
     constructor(x, y, direction = 'N', gridSize = {width: 5, height: 5}, battery) {
         super(x, y, battery);
 
         this.direction = direction
         this.grid = gridSize;
+        this.halt = false;
     }
 
     moveRover(stringOfLetters) {
         // need to loop over letters and call findDirection function or another one to move
         stringOfLetters.split('').forEach(letter => {
             if (letter === 'M') {
-                if(this.checkBounds() && this.checkObstacles(this.x + 1, this.y + 1)) {
+                if(this.checkBounds() && this.checkObstacles() && !this.halt) {
                     this.#move();
                 }
                 this.battery -= 1;
@@ -84,11 +86,18 @@ class Rover extends Robot {
         } return true;
     }
 
-    checkObstacles(x, y) {
+    checkObstacles() {
+        let y = this.y;
+        let x = this.x;
+        if(this.direction === 'N') {y = this.y + 1;}
+        if(this.direction === 'S') {y = this.y - 1;}
+        if(this.direction === 'W') {x = this.x - 1;}
+        if(this.direction === 'E') {x = this.x + 1;}
         environment.obstacles.forEach(obstacle => {
             const [xPos, yPos] = obstacle;
             if (xPos === x && yPos === y) {
                 this.crashed('obstacle');
+                this.halt = true;
                 return false;
             }
         }) 
