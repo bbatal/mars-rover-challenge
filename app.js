@@ -1,3 +1,8 @@
+const environment = {
+    obstacles: [[0,4], [3, 2], [5, 4]],
+    chargingStation: [[3,5]]
+}
+
 class Robot {
 
     battery;
@@ -13,19 +18,21 @@ class Robot {
 class Rover extends Robot {
 
     compass = ['N','E','S','W'];
+    halt;
 
     constructor(x, y, direction = 'N', gridSize = {width: 5, height: 5}, battery) {
         super(x, y, battery);
 
         this.direction = direction
         this.grid = gridSize;
+        this.halt = false;
     }
 
     moveRover(stringOfLetters) {
         // need to loop over letters and call findDirection function or another one to move
         stringOfLetters.split('').forEach(letter => {
             if (letter === 'M') {
-                if(this.checkBounds()) {
+                if(this.checkBounds() && this.checkObstacles() && !this.halt) {
                     this.#move();
                 }
                 this.battery -= 1;
@@ -74,22 +81,42 @@ class Rover extends Robot {
     // checking if rover is out of bounds
     checkBounds() {
         if(this.x > this.grid.width || this.x < 0 || this.y > this.grid.height || this.y < 0) {
-            console.log('Im sorry but the rover has crashed');
+            this.crashed('Out of Bounds')
             return false;
         } return true;
+    }
+
+    checkObstacles() {
+        let y = this.y;
+        let x = this.x;
+        if(this.direction === 'N') {y = this.y + 1;}
+        if(this.direction === 'S') {y = this.y - 1;}
+        if(this.direction === 'W') {x = this.x - 1;}
+        if(this.direction === 'E') {x = this.x + 1;}
+        environment.obstacles.forEach(obstacle => {
+            const [xPos, yPos] = obstacle;
+            if (xPos === x && yPos === y) {
+                this.crashed('obstacle');
+                this.halt = true;
+                return false;
+            }
+        }) 
+        return true;
     }
 
     // need to tell me where the final location is
     logCurrentLocation() {
         console.log(`I am currently located at x:${this.x}, y:${this.y} and facing ${this.direction} and my battery charge is ${this.battery}`);
     }
+
+    crashed(reason) {
+        console.log(`the rover has stopped due to ${reason} in it's way`);
+    }
     
 }
-// TODO add class that can create many rovers and keep them in a list,
-// Add a battery life to the rovers, and a recharging station
-// add obstacles to the grid
-// make the grid smaller and bigger
-// 
+// TODO - add object of obstacles and recharging station
+// TODO - have the rover know how far it is from a recharging station
+// TODO - make function to allow the rover to go to recharging station automatically
 
 class marsRover {
 
@@ -122,9 +149,10 @@ const roverSquad = new marsRover(10, 10);
 roverSquad.addRover(3,3, 'E');
 roverSquad.moveRover('MMRMMRMRRM');
 roverSquad.addRover(1,1,'W');
-roverSquad.moveRover('RMMMRMMM');
+roverSquad.moveRover('RMMMRMMMMM');
 
 roverSquad.addRover(0,0,'N');
+roverSquad.moveRover('MMMM');
 roverSquad.getFinalPosition();
 
 
